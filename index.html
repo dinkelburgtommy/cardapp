@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#0f0f13" />
+  <title>Kartendeck</title>
+  <link rel="manifest" href="manifest.json" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HAUPTANSICHT: KARTEN-STAPEL -->
+  <div id="screen-deck" class="screen active">
+
+    <header>
+      <div class="progress-wrap">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+      <div class="header-info">
+        <span id="card-counter">1 / 52</span>
+        <span id="count-display" class="count-badge">Zähler: <strong id="live-count">0</strong></span>
+      </div>
+    </header>
+
+    <main class="deck-area">
+      <!-- Hintergrund-Karten (Stapel-Effekt) -->
+      <div class="card-shadow shadow-3"></div>
+      <div class="card-shadow shadow-2"></div>
+      <div class="card-shadow shadow-1"></div>
+
+      <!-- Die aktive Karte -->
+      <div class="card" id="active-card">
+        <div class="card-inner">
+          <img id="card-img" src="" alt="Spielkarte" />
+          <!-- FALLBACK wenn kein Bild vorhanden -->
+          <div class="card-placeholder" id="card-placeholder">
+            <span class="card-val" id="card-value-top"></span>
+            <span class="card-suit" id="card-suit-mid"></span>
+            <span class="card-val bottom" id="card-value-bot"></span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <button class="btn-shuffle" id="btn-shuffle">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="16 3 21 3 21 8"></polyline>
+          <line x1="4" y1="20" x2="21" y2="3"></line>
+          <polyline points="21 16 21 21 16 21"></polyline>
+          <line x1="15" y1="15" x2="21" y2="21"></line>
+        </svg>
+        Mischen
+      </button>
+      <p class="swipe-hint">Nach oben wischen</p>
+    </footer>
+
+  </div>
+
+
+  <!-- ENDSCREEN: KARTENZÄHLEN-CHECK -->
+  <div id="screen-end" class="screen">
+
+    <div class="end-card">
+      <div class="end-icon">🃏</div>
+      <h1>Deck durchgespielt!</h1>
+      <p class="end-sub">Was ist dein gezählter Wert?</p>
+
+      <div class="count-info">
+        <div class="count-rule"><span class="badge green">+1</span> 2 – 6</div>
+        <div class="count-rule"><span class="badge gray">0</span> 7 – 9</div>
+        <div class="count-rule"><span class="badge red">–1</span> 10, J, Q, K, A</div>
+      </div>
+
+      <input type="number" id="user-count-input" placeholder="z.B. +4 oder -3" />
+
+      <button class="btn-check" id="btn-check">Prüfen</button>
+
+      <div id="result-box" class="result-box hidden">
+        <div id="result-icon" class="result-icon"></div>
+        <p id="result-text"></p>
+        <p id="result-correct" class="result-small"></p>
+      </div>
+
+      <button class="btn-restart" id="btn-restart">Neu starten</button>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js');
+    }
+  </script>
+</body>
+</html>
